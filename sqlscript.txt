@@ -1,0 +1,55 @@
+--Initial Script for Creating DataBase Table --
+
+
+-- create table-- 
+
+CREATE TABLE SalesPersons (
+    personID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    personName VARCHAR(30),
+    itemA INT,
+    itemB INT,
+    itemC INT,
+    itemD INT,
+    itemTotal INT
+);
+
+
+-- select all from database table-- 
+
+SELECT * FROM salesdb.salespersons;
+
+-- add triger-- 
+
+CREATE TRIGGER update_itemTotal
+BEFORE UPDATE ON SalesPersons
+FOR EACH ROW
+SET NEW.itemTotal = NEW.itemA + NEW.itemB + NEW.itemC + NEW.itemD;
+
+
+-- Insert values to table-- 
+INSERT INTO SalesPersons (personName, itemA, itemB, itemC, itemD)
+VALUES ('josepa', 13, 210, 24, 42);
+
+-- Item total-- 
+
+SELECT
+    personID,salespersons
+    personName,
+    itemA,
+    itemB,
+    itemC,
+    itemD,
+    itemTotal
+FROM SalesPersons
+
+UNION ALL
+
+SELECT
+    NULL AS personID,           
+    'Total' AS personName,      
+    SUM(itemA) AS itemA,
+    SUM(itemB) AS itemB,
+    SUM(itemC) AS itemC,
+    SUM(itemD) AS itemD,
+    SUM(itemTotal) AS itemTotal
+FROM SalesPersons;
